@@ -1,4 +1,6 @@
 <script lang="ts">
+import { identity } from "svelte/internal";
+
 	import { createLifeGame } from "./lifegame";
 	const ROW_SIZE = 20
 	const COLUMN_SIZE = 20
@@ -11,7 +13,11 @@
 		<div class="lifegame-cells">
 			{#each $lifegame.grid as row, i}
 				{#each row as col, j}
-					<div class="cell" style="grid-row: {i + 1}"></div>
+					<div
+					  class="cell"
+						class:alive={col.isAlive}
+						style="grid-row: {i + 1}"
+						on:click={(e) => lifegame.toggle(i, j)} />
 				{/each}
 			{/each}
 		</div>
@@ -42,5 +48,8 @@
 		width: 20px;
 		height: 20px;
 		background-color: #eee;
+	}
+	.cell.alive {
+		background-color: red;
 	}
 </style>

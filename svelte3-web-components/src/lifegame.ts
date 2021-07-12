@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export const createLifeGame = (rowSize: number, colSize: number) => {
+export function createLifeGame (rowSize: number, colSize: number) {
   const { subscribe, set, update } = writable(defaultState(rowSize, colSize))
   return {
     subscribe,
