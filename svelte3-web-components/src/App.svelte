@@ -1,20 +1,15 @@
 <script lang="ts">
+	import { createLifeGame } from "./lifegame";
 	const ROW_SIZE = 20
 	const COLUMN_SIZE = 20
 
-	const grid = []
-	for (let i = 0; i < ROW_SIZE; i++) {
-		grid[i] = []
-		for (let j = 0; j < COLUMN_SIZE; j++) {
-			grid[i][j] = { isAlive: false }
-		}
-	}
+	const lifegame = createLifeGame(ROW_SIZE, COLUMN_SIZE)
 </script>
 
 <div class="lifegame-container">
 	<div class="lifegame-cells-container">
 		<div class="lifegame-cells">
-			{#each grid as row, i}
+			{#each $lifegame.grid as row, i}
 				{#each row as col, j}
 					<div class="cell" style="grid-row: {i + 1}"></div>
 				{/each}
