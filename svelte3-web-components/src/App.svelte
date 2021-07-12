@@ -1,30 +1,51 @@
 <script lang="ts">
-	export let name: string;
+	const ROW_SIZE = 20
+	const COLUMN_SIZE = 20
+
+	const grid = []
+	for (let i = 0; i < ROW_SIZE; i++) {
+		grid[i] = []
+		for (let j = 0; j < COLUMN_SIZE; j++) {
+			grid[i][j] = { isAlive: false }
+		}
+	}
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<div class="lifegame-container">
+	<div class="lifegame-cells-container">
+		<div class="lifegame-cells">
+			{#each grid as row, i}
+				{#each row as col, j}
+					<div class="cell" style="grid-row: {i + 1}"></div>
+				{/each}
+			{/each}
+		</div>
+	</div>
+</div>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+	.lifegame-container {
+		display: block;
+		width: max-content;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.lifegame-cells-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	.lifegame-cells {
+		display: grid;
+		background-color: #333;
+		gap: 1px 1px;
+		border: solid 1px #333;
+	}
+
+	.cell {
+		width: 20px;
+		height: 20px;
+		background-color: #eee;
 	}
 </style>
