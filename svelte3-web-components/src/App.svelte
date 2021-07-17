@@ -1,9 +1,38 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { createLifeGame } from "./lifegame";
 	const ROW_SIZE = 20
 	const COLUMN_SIZE = 20
 
 	const lifegame = createLifeGame(ROW_SIZE, COLUMN_SIZE)
+
+	let isRunning = false
+	let tickInterval
+
+	const startTimer = () => {
+		tickInterval = setInterval(() => {
+			lifegame.moveNextTick()
+		}, 30)
+	}
+
+	const stopTimer = () => {
+		clearInterval(tickInterval)
+		tickInterval = undefined
+	}
+
+	$: if(isRunning && !tickInterval) {
+		startTimer()
+	}
+
+	$: if (!isRunning && tickInterval) {
+		stopTimer()
+	}
+
+	onDestroy(() => {
+		if (tickInterval) {
+			stopTimer()
+		}
+	})
 </script>
 
 <div class="lifegame-container">
@@ -21,7 +50,12 @@
 		</div>
 	</div>
 	<div class="lifegame-controller-container">
-		<button on:click={(e) => lifegame.moveNextTick()}>1ターン進める</button>
+		{#if !isRunning}
+		  <button on:click={(e) => isRunning = true}>タイマーを動かす</button>
+		  <button on:click={(e) => lifegame.moveNextTick()}>1ターン進める</button>
+		{:else}
+		  <button on:click={(e) => isRunning = false}>タイマーを止める</button>
+		{/if}
 	</div>
 </div>
 
