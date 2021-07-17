@@ -4,8 +4,9 @@ export function createLifeGame (rowSize: number, colSize: number) {
   const { subscribe, set, update } = writable(defaultState(rowSize, colSize))
   return {
     subscribe,
-    toggle: (row, col) => update(state => toggle(state, row, col))
-  }
+    toggle: (row, col) => update((state) => toggle(state, row, col)),
+    moveNextTick: () => update(moveNextTick)
+  };
 }
 
 const defaultGrid = (rowSize: number, colSize: number) => {
@@ -66,6 +67,19 @@ const isCallAliveWhenNextTick = (oldState: any, row: number, col: number) => {
     return getCountBool(count)
   }
   return count === 3
+}
+
+const moveNextTick = (oldState: any) => {
+  const newState = JSON.parse(JSON.stringify(oldState))
+  for (let i = 0; i < newState.rowSize; i++) {
+    for (let j = 0; j < newState.colSize; j++) {
+      newState.grid[i][j] = {
+        ...newState.grid[i][j],
+        isAlive: isCallAliveWhenNextTick(oldState, i, j)
+      };
+    }
+  }
+  return newState
 }
 
 const getCountBool= (countNumber: number) => {
