@@ -1,6 +1,4 @@
 <script lang="ts">
-import { identity } from "svelte/internal";
-
 	import { createLifeGame } from "./lifegame";
 	const ROW_SIZE = 20
 	const COLUMN_SIZE = 20

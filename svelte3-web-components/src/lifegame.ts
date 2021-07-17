@@ -35,3 +35,50 @@ const toggle = (oldState: any, row: number, col: number) => {
   };
   return newState
 }
+
+const isCallAliveWhenNextTick = (oldState: any, row: number, col: number) => {
+  const directions = [
+    [-1, -1],
+    [-1, +0],
+    [-1, +1],
+    [+0, -1],
+    /* */
+    [+0, +1],
+    [+1, -1],
+    [+1, +0],
+    [+1, +1],
+  ];
+  let count = 0
+  for (const d of directions) {
+    const newRow = row + d[0]
+    const newCol = col + d[1]
+    if (newRow < 0 || oldState.rowSize -1 < newRow) {
+      continue
+    }
+    if (newCol < 0 || oldState.colSize -1 < newCol) {
+      continue
+    }
+    if (oldState.grid[newRow][newCol].isAlive) {
+      count++
+    }
+  }
+  if (oldState.grid[row][col].isAlive) {
+    return getCountBool(count)
+  }
+  return count === 3
+}
+
+const getCountBool= (countNumber: number) => {
+  // 生存
+  if (countNumber === 2 || countNumber === 3) {
+    return true;
+  }
+  // 過疎？
+  if (countNumber <= 1) {
+    return !(countNumber <= 1);
+  }
+  // 過密？
+  if (countNumber >= 4) {
+    return !(countNumber >= 4);
+  }
+}
