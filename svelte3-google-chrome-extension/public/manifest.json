@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "svelte3-google-chrome-extension",
+  "version": "1.0.0",
+  "description": "A sample extension for Google Chrome written in Svelte3",
+  "browser_action": {
+    "default_title": "Copy title",
+    "default_popup": "index.html"
+  },
+  "author": "miruoo",
+  "homepage_url": "https://github.com/miily8310s/start-svelte3",
+  "permissions": ["http://*/*", "https://*/*", "tabs", "clipboardWrite"]
+}
